@@ -11,6 +11,6 @@ Data is available at [NONCODE](http://www.noncode.org/), [NPInter v3.0](http://b
 * xgboost == 1.3.1
 # Usage
 To run the model, default 5 fold cross validation
-'''
+```
 python example/main.py
-'''
+```
