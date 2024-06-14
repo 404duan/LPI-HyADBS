@@ -31,9 +31,9 @@ def KFold(K):
     aucArray = np.zeros((20, K), dtype=float)
     auprArray = np.zeros((20, K), dtype=float)
     for i in range(20):
-        mm = 4
-        cv = 4
-        cross_x, cross_y = loadcv4Data("./data/"+str(mm)+"/")
+        mm = 1
+        cv = 3
+        cross_x, cross_y = loadcv3Data("./data/"+str(mm)+"/")
         for j in range(K):
             train_x = []
             train_y = []
@@ -43,7 +43,7 @@ def KFold(K):
                 test_x.extend(itest_x)
             for itest_y in cross_y[j]:
                 test_y.extend(itest_y)
-            test_x = np.array(test_x, dtype=float).reshape(-1, 405)
+            test_x = np.array(test_x, dtype=float).reshape(-1, 653)
             test_y = np.array(test_y, dtype=int).reshape(-1, 1)
             train_x.extend(cross_x[c] for c in range(len(cross_x)) if c != j)
             train_y.extend(cross_y[c] for c in range(len(cross_y)) if c != j)
@@ -55,7 +55,7 @@ def KFold(K):
             train_y = train_y.replace("[", "")
             train_y = train_y.replace("]", "")
             train_y = list(eval(train_y))
-            train_x = np.array(train_x, dtype=float).reshape(-1, 405)
+            train_x = np.array(train_x, dtype=float).reshape(-1, 653)
             train_y = np.array(train_y, dtype=int).reshape(-1, 1)
 
             train_ds = TensorDataset(torch.from_numpy(train_x).type(torch.FloatTensor), torch.from_numpy(train_y).type(torch.FloatTensor))
@@ -64,7 +64,7 @@ def KFold(K):
             test_dl = DataLoader(test_ds, batch_size=5000, shuffle=True, drop_last=False)
 
             print("# No.{} Time No.{} Fold".format(i+1, j+1))
-            model, optim = get_model(lr, 405, 405 * 2, 1)
+            model, optim = get_model(lr, 653, 653 * 2, 1)
             model.train()
             print("******** DNN start to train ********")
             for epoch in range(epochs):
